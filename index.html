@@ -22,20 +22,53 @@
     }
     .fade-in { animation: fadeIn 0.5s ease-in; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    /* تحسين عرض الرموز الرياضية */
     .math { font-family: 'Times New Roman', serif; letter-spacing: 0.5px; direction: ltr; display: inline-block; }
+    
+    /* Timer Styles */
+    .timer-box {
+        background: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        display: inline-block;
+        margin-bottom: 20px;
+        border: 2px solid #e5e7eb;
+    }
+    .timer-text {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4f46e5;
+        font-family: 'Courier New', monospace;
+    }
+    .timer-warning {
+        color: #dc2626 !important;
+        animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
 
   <!-- أدوات التحكم -->
-  <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+  <div class="max-w-4xl mx-auto mb-4 flex flex-wrap gap-3 justify-center no-print">
     <button onclick="toggleAnswers()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer">
       👁️ إظهار/إخفاء الإجابات النموذجية
     </button>
     <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer">
       🖨️ طباعة / حفظ كـ PDF
     </button>
+  </div>
+
+  <!-- التايمر (Timer) -->
+  <div class="text-center no-print">
+      <div class="timer-box">
+          <span class="text-gray-500 ml-2 text-sm">⏱️ الوقت المتبقي:</span>
+          <span id="timer" class="timer-text">30:00</span>
+      </div>
   </div>
 
   <!-- الرأس -->
@@ -47,10 +80,8 @@
     <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
       <span>📅 التاريخ: <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
       <span>👤 الاسم: <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="أدخل اسمك"></span>
-      <span>⏱️ المدة: 60 دقيقة</span>
       <span>📊 الدرجة الكلية: 100</span>
     </div>
-    <p class="mt-2 text-xs text-center text-gray-500">💡 ملاحظة: جميع الأسئلة من اختيار متعدد. اختر الإجابة الصحيحة فقط.</p>
   </header>
 
   <main class="max-w-4xl mx-auto space-y-8">
@@ -58,7 +89,7 @@
     <!-- المحور 1: المشتقة العكسية والتكامل غير المحدود -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور الأول: المشتقة العكسية والتكامل غير المحدود</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="1">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>1.</strong> ما هي المشتقة العكسية العامة للدالة <span class="math">f(x) = 3x²</span>؟<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q1" value="a" class="mr-2"> a) <span class="math">x³ + C</span></label>
@@ -97,7 +128,7 @@
     <!-- المحور 2: التكامل المحدود وخصائصه -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور الثاني: التكامل المحدود وخصائصه</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="2">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>5.</strong> قيمة <span class="math">∫₀² 3x² dx</span> تساوي:<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q5" value="a" class="mr-2"> a) 8</label>
@@ -107,7 +138,7 @@
           <div class="answer-box text-green-700 mt-2 font-medium">✅ الإجابة: a) 8</div>
         </li>
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
-          <strong>6.</strong> إذا كان <span class="math">∫₁ f(x) dx = 10</span> و <span class="math">∫₁³ f(x) dx = 4</span>، فما قيمة <span class="math">∫₃⁵ f(x) dx</span>؟<br>
+          <strong>6.</strong> إذا كان <span class="math">∫₁⁵ f(x) dx = 10</span> و <span class="math">∫₁³ f(x) dx = 4</span>، فما قيمة <span class="math">∫₃⁵ f(x) dx</span>؟<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q6" value="a" class="mr-2"> a) 14</label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q6" value="b" class="mr-2"> b) 6</label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q6" value="c" class="mr-2"> c) 10</label>
@@ -136,9 +167,9 @@
     <!-- المحور 3: النظرية الأساسية للتفاضل والتكامل -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور الثالث: النظرية الأساسية للتفاضل والتكامل</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="3">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
-          <strong>9.</strong> إذا كان <span class="math">F(x) = ∫₀ (t² + 1) dt</span>، فما قيمة <span class="math">F'(x)</span>؟<br>
+          <strong>9.</strong> إذا كان <span class="math">F(x) = ∫₀ˣ (t² + 1) dt</span>، فما قيمة <span class="math">F'(x)</span>؟<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q9" value="a" class="mr-2"> a) <span class="math">x² + 1</span></label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q9" value="b" class="mr-2"> b) <span class="math">2x</span></label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q9" value="c" class="mr-2"> c) <span class="math">x³/3 + x</span></label>
@@ -175,7 +206,7 @@
     <!-- المحور 4: التكامل بالتعويض -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور الرابع: التكامل بالتعويض</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="4">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>13.</strong> لحل <span class="math">∫ 2x cos(x²) dx</span>، أنسب تعويض هو:<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q13" value="a" class="mr-2"> a) <span class="math">u = cos(x²)</span></label>
@@ -214,7 +245,7 @@
     <!-- المحور 5: المساحة والحجوم وطول المنحنى -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور الخامس: المساحة، الحجوم، وطول المنحنى</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="5">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>17.</strong> المساحة بين <span class="math">y = x²</span> و <span class="math">y = x</span> من 0 إلى 1 تساوي:<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q17" value="a" class="mr-2"> a) <span class="math">1/6</span></label>
@@ -241,10 +272,10 @@
         </li>
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>20.</strong> طول المنحنى <span class="math">y = f(x)</span> من <span class="math">a</span> إلى <span class="math">b</span> يُعطى بالتكامل:<br>
-          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="a" class="mr-2"> a) <span class="math">∫ₐᵇ √(1 + [f'(x)]²) dx</span></label>
+          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="a" class="mr-2"> a) <span class="math">∫ₐ √(1 + [f'(x)]²) dx</span></label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="b" class="mr-2"> b) <span class="math">∫ₐ f'(x) dx</span></label>
-          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="c" class="mr-2"> c) <span class="math">∫ₐ [f(x)]² dx</span></label>
-          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="d" class="mr-2"> d) <span class="math">∫ₐ √(1 + f(x)) dx</span></label>
+          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="c" class="mr-2"> c) <span class="math">∫ₐᵇ [f(x)]² dx</span></label>
+          <label class="mr-4 cursor-pointer"><input type="radio" name="q20" value="d" class="mr-2"> d) <span class="math">∫ₐᵇ √(1 + f(x)) dx</span></label>
           <div class="answer-box text-green-700 mt-2 font-medium">✅ الإجابة: a)</div>
         </li>
       </ol>
@@ -253,11 +284,11 @@
     <!-- المحور 6: التكامل بالتجزئة والتكامل المثلثي -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور السادس: التكامل بالتجزئة والتكامل المثلثي</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="6">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>21.</strong> لحل <span class="math">∫ x eˣ dx</span> بالتجزئة، نختار <span class="math">u = x</span> و <span class="math">dv = eˣ dx</span>. الناتج:<br>
-          <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="a" class="mr-2"> a) <span class="math">x eˣ - eˣ + C</span></label>
-          <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="b" class="mr-2"> b) <span class="math">x eˣ + eˣ + C</span></label>
+          <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="a" class="mr-2"> a) <span class="math">x eˣ - e + C</span></label>
+          <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="b" class="mr-2"> b) <span class="math">x eˣ + e + C</span></label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="c" class="mr-2"> c) <span class="math">½ x² eˣ + C</span></label>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q21" value="d" class="mr-2"> d) <span class="math">eˣ + C</span></label>
           <div class="answer-box text-green-700 mt-2 font-medium">✅ الإجابة: a)</div>
@@ -292,7 +323,7 @@
     <!-- المحور 7: المعادلات التفاضلية من الرتبة الأولى -->
     <section class="bg-white p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold mb-4 text-indigo-700">🔹 المحور السابع: المعادلات التفاضلية من الرتبة الأولى</h2>
-      <ol class="space-y-4 text-sm">
+      <ol class="space-y-4 text-sm" data-topic="7">
         <li class="border-r-4 border-indigo-500 pr-4 py-2">
           <strong>25.</strong> الحل العام لـ <span class="math">dy/dx = 3y</span> هو:<br>
           <label class="mr-4 cursor-pointer"><input type="radio" name="q25" value="a" class="mr-2"> a) <span class="math">y = Ce^{3x}</span></label>
@@ -379,7 +410,7 @@
   </div>
 
   <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
-   MR. Mohammed Hesham| © امتحان الرياضيات المتقدم - الصف 12 | الفصل 3 | نظام التصحيح الآلي | متوافق مع المنهج الرسمي
+    © امتحان الرياضيات المتقدم - الصف 12 | الفصل 3 | نظام التصحيح الآلي | متوافق مع المنهج الرسمي
   </footer>
 
   <script>
@@ -396,11 +427,67 @@
         emailjs.init(PUBLIC_KEY);
     })();
 
+    // ========================
+    // ⏱️ TIMER FUNCTIONALITY
+    // ========================
+    let timeRemaining = 1800; // 30 دقيقة (بالثواني)
+    let timerInterval;
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const timerEl = document.getElementById('timer');
+            
+            // تنسيق الوقت MM:SS
+            timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // تغيير اللون للأحمر عند اقتراب الوقت (أقل من 5 دقائق)
+            if (timeRemaining <= 300) {
+                timerEl.classList.add('timer-warning');
+            }
+            
+            // تسليم تلقائي عند انتهاء الوقت
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                alert("انتهى الوقت! سيتم تسليم الامتحان تلقائياً.");
+                gradeExam();
+            }
+        }, 1000);
+    }
+
     function toggleAnswers() {
       document.body.classList.toggle('answers-visible');
     }
 
+    // ========================
+    // 🔄 SHUFFLE FUNCTIONALITY
+    // ========================
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    function shuffleQuestions() {
+        // خلط الأسئلة داخل كل محور (Section)
+        const sections = document.querySelectorAll('main section ol');
+        sections.forEach(ol => {
+            const items = Array.from(ol.children);
+            const shuffled = shuffleArray(items);
+            shuffled.forEach(item => ol.appendChild(item));
+        });
+    }
+
+    // ========================
+    // ✅ GRADING FUNCTIONALITY
+    // ========================
     function gradeExam() {
+      clearInterval(timerInterval); // إيقاف التايمر
       const name = document.getElementById('studentName').value || 'طالب';
       const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString('ar-EG');
       let total = 0;
@@ -418,7 +505,6 @@
       ];
 
       let sectionScores = [0,0,0,0,0,0,0]; // 7 محاور
-      let qIndex = 0;
 
       for(let i=1; i<=28; i++){
         const selected = document.querySelector(`input[name="q${i}"]:checked`);
@@ -503,29 +589,12 @@
           console.error('EmailJS Error:', err);
         });
     }
-  </script>
-  <!-- كود ترتيب الأسئلة العشوائي -->
-<script>
+
+    // تشغيل التايمر وخلط الأسئلة عند تحميل الصفحة
     window.addEventListener('DOMContentLoaded', () => {
-        // 1. ترتيب أسئلة الاختيار من متعدد (MCQs)
-        const mcqSection = document.querySelector('main > section:nth-child(1) ol');
-        if(mcqSection) shuffleChildren(mcqSection);
-
-        // 2. ترتيب أسئلة الدراسة (Case Study)
-        const caseStudySection = document.querySelector('main > section:nth-child(3) ol');
-        if(caseStudySection) shuffleChildren(caseStudySection);
-
-        // 3. ترتيب المسائل الحسابية (Calculations)
-        const calcSection = document.querySelector('main > section:nth-child(4)');
-        if(calcSection) shuffleChildren(calcSection);
+        startTimer();
+        shuffleQuestions();
     });
-
-    // دالة الخلط العشوائي
-    function shuffleChildren(parent) {
-        for (let i = parent.children.length; i >= 0; i--) {
-            parent.appendChild(parent.children[Math.random() * i | 0]);
-        }
-    }
-</script>
+  </script>
 </body>
 </html>
