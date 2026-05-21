@@ -504,5 +504,28 @@
         });
     }
   </script>
+  <!-- كود ترتيب الأسئلة العشوائي -->
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // 1. ترتيب أسئلة الاختيار من متعدد (MCQs)
+        const mcqSection = document.querySelector('main > section:nth-child(1) ol');
+        if(mcqSection) shuffleChildren(mcqSection);
+
+        // 2. ترتيب أسئلة الدراسة (Case Study)
+        const caseStudySection = document.querySelector('main > section:nth-child(3) ol');
+        if(caseStudySection) shuffleChildren(caseStudySection);
+
+        // 3. ترتيب المسائل الحسابية (Calculations)
+        const calcSection = document.querySelector('main > section:nth-child(4)');
+        if(calcSection) shuffleChildren(calcSection);
+    });
+
+    // دالة الخلط العشوائي
+    function shuffleChildren(parent) {
+        for (let i = parent.children.length; i >= 0; i--) {
+            parent.appendChild(parent.children[Math.random() * i | 0]);
+        }
+    }
+</script>
 </body>
 </html>
